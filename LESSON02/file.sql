@@ -1,2 +1,2 @@
 --вот такой вот мегазапрос
-select * from dual
+select 1 x from dual
