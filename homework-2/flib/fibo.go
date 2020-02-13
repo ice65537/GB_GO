@@ -20,7 +20,7 @@ func FiboNumberSlow (n int) (out int64) {
 	return
 }
 
-//Кэшированная регрессия (падает на 93)
+//Кэшированная регрессия с int64 (падает на 93)
 func FiboNumber (n int) (out int64) {
 	var ok bool
 	
@@ -56,11 +56,3 @@ func FiboNumberBig (n int) (out *big.Int) {
 	}	
 	return
 }
-
-//Человечий формат
-func FiboNumberBigStr(n int) (out string) {
-	x:= FiboNumberBig(n)
-	out = x.String()
-	return
-}
-

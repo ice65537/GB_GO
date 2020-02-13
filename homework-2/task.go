@@ -17,7 +17,7 @@ func main() {
 func testFiboBig(n int) {
 	var i int
 	for i=0; i<n; i++ {
-		fmt.Printf("%v",flib.FiboNumberBigStr(i)); if i<n-1 {fmt.Print(", ")}
+		fmt.Printf("%v",flib.FiboNumberBig(i).String()); if i<n-1 {fmt.Print(", ")}
 	}
 }
 
