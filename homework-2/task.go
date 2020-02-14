@@ -6,11 +6,15 @@ import (
 )
 
 func main() {
-	fmt.Println("Тест функций проверки кратности:")
+	fmt.Println("\n\nТест функций проверки кратности:")
 	testMult(234523542345, []int64{2, 3, 5, 6, 7, 48, 25})
 	//
-	fmt.Println("Тест функции вычисления чисел Фибоначчи:")
+	fmt.Println("\n\nТест функции вычисления чисел Фибоначчи:")
 	testFiboBig(100)
+	//
+	fmt.Println("\n\nТест функции вычисления простых чисел")
+	x := flib.PrimeNumberSlice(100)
+	fmt.Println("Результат = ", x)
 }
 
 func testFiboBig(n int) {
