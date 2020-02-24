@@ -1,6 +1,7 @@
 package main
 
 import (
+	"GBStudy/homework-4/chess"
 	"GBStudy/homework-4/phonebook"
 	"fmt"
 	"sort"
@@ -69,4 +70,30 @@ func main() {
 	sort.Sort(&book)
 	fmt.Print("Телефонная книга, состояние 2s:\n", book, book.IdxName, "\n")
 	book.SaveToFile("c:/ice/phonebook2.json")
+
+	//Ходы конем
+	var desk chess.Desk
+
+	fmt.Println()
+	fmt.Println("Чистая доска")
+	desk.Print()
+
+	p, _ := chess.GetPoint("A1")
+	desk.SetCell("knight", true, p)
+
+	pt := make([]chess.Point, 1)
+	pt[0] = p
+	fmt.Println("Стартовое положение:", pt)
+
+	for i := 1; i < 10; i++ {
+		pt = desk.KnightMoves(pt, false, fmt.Sprint(i))
+		if len(pt) > 0 {
+			fmt.Printf("Шаг %d: %v\n", i, pt)
+			continue
+		}
+		break
+	}
+
+	fmt.Println("Исхоженная конем доска")
+	desk.Print()
 }
