@@ -18,10 +18,28 @@ type trnAction struct {
 	parseError   string
 }
 
+func (x trnAction) String() (s string) {
+	s = "dt=" + x.valueDate.Format("2006-01-02") + ", curr=" + x.baseCurrency + ", sum=" +
+		strconv.FormatFloat(x.amount, 'f', -1, 64) + ": " +
+		"DT account = " + x.debAccount + " / CT account = " + x.credAccount
+	if x.parseError != "" {
+		s += "\n" + x.parseError
+	}
+	return
+}
+
 type trnArray []trnAction
 
+func (x trnArray) String() (s string) {
+	s = ""
+	for _, value := range x {
+		s += value.String() + "\n"
+	}
+	return
+}
+
 //LoadFromFile -
-func (x trnArray) LoadFromFile(filename string) error {
+func (x *trnArray) LoadFromFile(filename string) error {
 	buffer, err := ioutil.ReadFile(filename)
 	if err != nil {
 		return err
@@ -38,19 +56,19 @@ func (x trnArray) LoadFromFile(filename string) error {
 	if err != nil {
 		return err
 	}
-	x = make(trnArray, len(csvArray))
+	*x = make(trnArray, len(csvArray))
 	for idx, csvRec := range csvArray {
-		x[idx].parseError = ""
-		if x[idx].valueDate, err = time.Parse("2006-01-02", csvRec[0]); err != nil {
-			x[idx].valueDate = badDate
-			x[idx].parseError += err.Error() + "\n"
+		(*x)[idx].parseError = ""
+		if (*x)[idx].valueDate, err = time.Parse("2006-01-02", csvRec[0]); err != nil {
+			(*x)[idx].valueDate = badDate
+			(*x)[idx].parseError += err.Error() + "\n"
 		}
-		x[idx].baseCurrency = csvRec[1]
-		x[idx].debAccount = csvRec[2]
-		x[idx].credAccount = csvRec[3]
-		if x[idx].amount, err = strconv.ParseFloat(csvRec[4], 64); err != nil {
-			x[idx].amount = 0
-			x[idx].parseError += err.Error() + "\n"
+		(*x)[idx].baseCurrency = csvRec[1]
+		(*x)[idx].debAccount = csvRec[2]
+		(*x)[idx].credAccount = csvRec[3]
+		if (*x)[idx].amount, err = strconv.ParseFloat(csvRec[4], 64); err != nil {
+			(*x)[idx].amount = 0
+			(*x)[idx].parseError += err.Error() + "\n"
 		}
 	}
 	return nil
